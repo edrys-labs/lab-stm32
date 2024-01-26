@@ -4,9 +4,9 @@ This is a tutorial on how to run codes from different languages on STM32 discove
 
 The subfolders include the description of the installation process and a `Hello World` example for
 
-+ MicroPython using `st-flash` and `mpremote`
-+ mbedOS based on `mbed-tools` (mbed CLI 2.0)
-+ Arduino using `arduino-cli`
++ [MicroPython](https://github.com/SebastianZug/STM_programming_by_CLI/blob/main/arduino/Using_Arduino.md) using `st-flash` and `mpremote`
++ [mbedOS](https://github.com/SebastianZug/STM_programming_by_CLI/blob/main/mbedOS/Using_mbedOS.md) based on `mbed-tools` (mbed CLI 2.0)
++ [Arduino](https://github.com/SebastianZug/STM_programming_by_CLI/blob/main/arduino/Using_Arduino.md) using `arduino-cli`
 
 The commandline tools of the first two programming languages require `python3` and `pip3` as well as `pipenv` to be installed on your system. The installation process of the specific packages is initiated by starting an `pipenv` environment within the corresponding folder.  For instance, to start the `pipenv` environment for MicroPython, run the following commands:
 
