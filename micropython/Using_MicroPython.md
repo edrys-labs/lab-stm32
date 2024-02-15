@@ -13,7 +13,11 @@
     # Flash .hex
     st-flash --format ihex write B_L475E_IOT01A-20240105-v1.22.1.hex
     ```
-+ __Press the reset button__
++ __Press the reset button!__
+
++ __Don't miss to press the reset button!__
+
++ __You have to restart the system - otherwise the interpreter will not start!__
 
 > Now the interpreter is ready! You can connect to the board using the serial port (e.g. `screen /dev/ttyACM0 115200`) and start coding!
 
@@ -26,7 +30,7 @@ https://github.com/micropython/micropython/tree/master/tools/mpremote
 + Let's make a first test and transmit a one-liner to the board
 
     ```bash 
-    > mpremote exec "import micropython; micropython.mem_info()"
+    > pipenv run mpremote exec "import micropython; micropython.mem_info()"
     stack: 484 out of 29688
     GC: total: 86976, used: 1456, free: 85520
     No. of 1-blocks: 15, 2-blocks: 7, max blk sz: 40, max free sz: 5333
@@ -54,6 +58,6 @@ https://github.com/micropython/micropython/tree/master/tools/mpremote
     The first command copies the file to the board. The second command executes the file on the board, it monitors the serial interface too.
 
     ```bash
-    mpremote fs cp MicroPythonExample.py :MicroPythonExample.py
-    mpremote run MicroPythonExample.py
+    pipenv run mpremote fs cp MicroPythonExample.py :MicroPythonExample.py
+    pipenv run mpremote run MicroPythonExample.py
     ```
