@@ -1,0 +1,342 @@
+<!--
+author:   Sebastian Zug; André Dietrich
+
+email:    sebastian.zug@informatik.tu-freiberg.de
+
+version:  0.1.0
+
+language: en
+
+narrator: UK English Female
+
+icon:     https://media.aubi-plus.com/institution/thumbnail/3f3de48-technische-universitaet-bergakademie-freiberg-logo.jpg
+
+-->
+
+# Running codes from different languages on STM32 discovery board 
+
+All three types of environments - local installation, docker container, and Edrys remote lab - are based on commandline tools to control the compilation, flashing and monitoring process. 
+
+## Local installation
+
+### Arduino C++
+
+A nice overview of arduino-cli is given in a short [Tutorial](https://www.youtube.com/watch?v=Uk5_RKMf2Dk).
+
+       {{0-1}}
+**************************************
+
+Installation
+----------------------
+
++ Download the [Arduino CLI](ttps://arduino.github.io/arduino-cli/0.21/installation/) for your OS and install it. We added a current copy inside to the `arduino`-folder.
++ Check its availability with `./arduino-cli version`
+
+  ```bash
+  > ./arduino-cli version                                                 
+  arduino-cli  Version: 0.35.1 Commit: 5edfa984 Date: 2024-01-16T14:50:44Z
+  ```
+
++ Install the STM32 core with 
+
+  ```bash
+  ./arduino-cli core install STMicroelectronics:stm32 --additional-urls https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json`
+  ```
+  
++ Check the installation with `./arduino-cli core list` - the output contain several STM boards  
++ Do not be confused if your board is not recognized correctly when running `./arduino-cli board list`. We have to reference its type manually.
+
+  ```bash 
+  > ./arduino-cli board list         
+  Port         Protocol Type              Board Name FQBN Core
+  /dev/ttyACM0 serial   Serial Port (USB) Unknown
+  ```
+
+**************************************
+
+       {{1-2}}
+**************************************
+
+Implementing Hello World
+----------------------
+
++ Create a new sketch with `./arduino-cli sketch new arduinoExample`
++ Copy the following code into the `arduinoExample.ino` file
+
+  ```cpp
+  /*
+  This code was written by Scott Fitzgerald, Arturo Guadalupi and Colby Newman
+  This example code is in the public domain.
+  https://www.arduino.cc/en/Tutorial/BuiltInExamples/Blink
+  */
+  // the setup function runs once when you press reset or power the board
+  void setup() {
+      // initialize digital pin LED_BUILTIN as an output.
+      pinMode(LED_BUILTIN, OUTPUT);
+      Serial.begin(9600);
+  }
+  // the loop function runs over and over again forever
+  void loop() {
+      digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+      Serial.println("LED ON");
+      delay(1000);                       // wait for a second
+      digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+      Serial.println("LED OFF");
+      delay(1000);                       // wait for a second
+  }
+  ```
+
+**************************************
+
+       {{2-3}}
+**************************************
+
+Apply the toolchain to the example
+----------------------
+
++ Compile the example 
+
+  ```bash
+  > ./arduino-cli compile arduinoExample --fqbn=STMicroelectronics:stm32:Disco:pnum=B_L475E_IOT01A --build-path=./arduinoBuild
+  ```
+
++ Upload the example HEX file to the board
+
+  ```bash
+  > ./arduino-cli upload --fqbn=STMicroelectronics:stm32:Disco:pnum=B_L475E_IOT01A      arduinoExample -p=/dev/ttyACM0 --input-dir=./arduinoBuild
+  ```
+
++ Monitor the example 
+
+  ```bash
+  > ./arduino-cli monitor -p /dev/ttyACM0
+  ```
+
+**************************************
+
+### mbedOS 
+
+The mbed-cli 2.0 is a Python-based command-line tool. Its documentation can be found [here](https://os.mbed.com/docs/mbed-os/v6.16/build-tools/use.html).
+
+       {{0-1}}
+**************************************
+
+Installation
+---------------
+
++ Install an ARM compiler on your system. Two a directly suported by mbed-tools: ARM GCC and Keil compiler
+
+  ```
+  sudo apt update                                                
+  sudo apt install gcc-arm-none-eabi -y
+  sudo apt install gcc-arm-linux-gnueabihf -y
+  sudo apt install gcc-aarch64-linux-gnu -y
+  ```
+
++ Ninja build system
+
+  ```
+  sudo apt update 
+  sudo apt-get install ninja-build
+  ```
+
++ Install mbed-tools
+
+  ```
+  pip install mbed-tools
+  ```
+
+  If your are familar with `pipenv`, you can use it too. The corresponding `Pipfile` is included in the `mbedOS`-folder. Run `pipenv install` to install the dependencies.
+
+**************************************
+
+       {{1-2}}
+**************************************
+
+Implementing Hello World
+----------------------
+- DISK:DISK
+      
++ Create a new project with `mbed-tools` and change into the project folder
+
+  ```bash 
+  > mbed-tools new mbedOSExample
+  > cd mbedOSExample
+  ```
+
++ Replace the autogenerated `main.cpp` with the following code by copying an example `main.cpp` in the `mbedOSExample`-folder `mv main.cpp /mbedOSExample/main.cpp`
+
+  ```cpp
+  /* mbed Microcontroller Library
+  * Copyright (c) 2019 ARM Limited
+  * SPDX-License-Identifier: Apache-2.0
+  */
+  #include "mbed.h"
+  // Blinking rate in milliseconds
+  #define BLINKING_RATE     500ms
+  int main()
+  {
+      DigitalOut led(LED1);
+      printf("Programming ARM Controler with mbed is cool\r\n");
+      while (true) {
+          led = !led;
+          if (led)
+              printf("LED ON\r\n");
+          else
+              printf("LED OFF\r\n");
+          ThisThread::sleep_for(BLINKING_RATE);
+      }
+  }
+  ```
+
+**************************************
+
+       {{2-3}}
+**************************************
+
+Apply the toolchain to the example
+----------------------
+
++ Flash the board and monitoring the output of the `HelloWorld` example above
+
+  ```bash
+  mbed-tools compile -m DISCO_L475VG_IOT01A -t GCC_ARM -f --sterm
+  ```
+
+**************************************
+
+### micropython 
+
+       {{0-1}}
+**************************************
+
+Installation
+---------------
+
+1. Installing tools for flashing python interpreter
+
+   + Download the [firmware](http://micropython.org/download#stm32) for your board (you can find a current copy for STM32L475EIOT01A inside `./micropython` folder)
+   + Install stm-tools on your computer (`sudo apt install stlink-tools` on Ubuntu)
+   + Connect your board to your computer
+
+     ```bash
+     # Optional erase to clear existing filesystem.
+     > st-flash erase
+     # Flash .hex
+     > st-flash --format ihex write B_L475E_IOT01A-20240105-v1.22.1.hex
+     ```
+     > __Press the reset button - otherwise the interpreter will not start!__
+
+2. Building the toolchain for remote control
+
+    `mpremote` is a tool for controlling MicroPython boards over a serial connection. It is available at https://github.com/micropython/micropython/tree/master/tools/mpremote. 
+
+    + Install the tool with `pipenv install` in the `micropython`-folder or run a general installation by calling `pip install mpremote` in your terminal.
+
+    + Let's make a first test and transmit a one-liner to the board
+
+     ```bash 
+     > pipenv run mpremote exec "import micropython; micropython.mem_info()"
+     stack: 484 out of 29688
+     GC: total: 86976, used: 1456, free: 85520
+     No. of 1-blocks: 15, 2-blocks: 7, max blk sz: 40, max free sz: 5333
+     ```
+
+**************************************
+
+       {{1-2}}
+**************************************
+
+Implementing Hello World
+----------------------
+
++ Now let's send a file to the board. The following python code is included in `./micropython/MicroPythonExample.py`
+
+  ```python helloWorld.py
+  print("Hello, STM32!")
+  import pyb
+  import time
+  print ("LEDs with MicroPython is easy")
+  led = pyb.LED (1)
+  led_counter = 0
+  while 1: 
+      led.on()
+      time.sleep_ms (500) 
+      led.off()
+      time.sleep_ms (500) 
+  ```
+
+**************************************
+
+       {{2-3}}
+**************************************
+
+Apply the toolchain to the example
+----------------------
+
+The first command copies the file to the board. The second command executes the file on the board, it monitors the serial interface too.
+
+```bash
+pipenv run mpremote fs cp MicroPythonExample.py :MicroPythonExample.py
+pipenv run mpremote run MicroPythonExample.py
+```
+
+**************************************
+
+## Docker container
+
+The docker container extends an existing image providing a web based access on serial communication. The image is available at [DockerHub](https://hub.docker.com/r/andredietrich/edrys-remote-lab).
+
+Inside the docker-compose file you have to define the corresponding user name. 
+
+```bash
+    ...
+    volumes:
+      #            +- user path
+      #            v
+      - /media/sebastian/DIS_L4IOT:/media/appuser/DIS_L4IOT
+```
+
+Afterwards your are ready to start the container.
+
+```bash
+> cd docker_run
+> docker-compose up                               
+Starting edrys_arm_development ... done
+Attaching to edrys_arm_development
+edrys_arm_development    | pyxtermjs > INFO (main:168) serving on http://0.0.0.0:5000
+```
+
+Open a different shell and connect to the running container.
+
+```bash
+> docker exec -it edrys_arm_development /bin/zsh
+```
+
+After starting the docker container we have an access to our development system now. The following commands are executed inside the container.
+
+```bash
+> mbed-tools detect
+Board name                            Serial number             Serial port    Mount point(s)            Build target(s)      Interface Version
+------------------------------------  ------------------------  -------------  ------------------------  -------------------  -------------------
+DISCO-L475VG-IOT01A (B-L475E-IOT01A)  066BFF303555483043215322  /dev/ttyACM0   /media/appuser/DIS_L4IOT  DISCO_L475VG_IOT01A  V2J37M27
+```
+
+Ok, the controller is correctly recognized. Now we can start to generate a new codebase, compile and flash the code.
+
+```bash
+> cd / 
+> cd local_run/mbedOS
+> mbed-tools new mbedOSExample
+Creating a new Mbed program at path '/local_run/mbedOS/mbedOSExample'.
+Downloading mbed-os and adding it to the project.
+> mv main.cpp mbedOSExample/main.cpp
+> cd mbedOSExample
+> mbed-tools compile -m DISCO_L475VG_IOT01A -t GCC_ARM -f --sterm
+```
+
+> The other two examples can be executed in the same way.
+
+## Edrys remote lab
+
+Todo 

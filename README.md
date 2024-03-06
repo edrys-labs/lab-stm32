@@ -1,28 +1,16 @@
-# Running codes from different languages on STM32 discovery board 
+# Discovery different programming languages at STM32 discovery board 
 
-This is a tutorial on how to run codes from different languages on STM32 discovery board. All steps - preparing the system, compiling the code, flashing the board and monitoring the outputs on UART - are implemented in command line. The tutorial is based on Ubuntu 22.04 LTS.
+This is a tutorial on how to run codes from different languages on STM32 discovery board. We included 
 
-The subfolders include the description of the installation process and a `Hello World` example for
++ [MicroPython](https://micropython.org/) 
++ [mbedOS](https://os.mbed.com/mbed-os/) 
++ [Arduino](https://docs.arduino.cc/)
 
-+ [MicroPython](https://github.com/SebastianZug/STM_programming_by_CLI/blob/main/arduino/Using_Arduino.md) using `st-flash` and `mpremote`
-+ [mbedOS](https://github.com/SebastianZug/STM_programming_by_CLI/blob/main/mbedOS/Using_mbedOS.md) based on `mbed-tools` (mbed CLI 2.0)
-+ [Arduino](https://github.com/SebastianZug/STM_programming_by_CLI/blob/main/arduino/Using_Arduino.md) using `arduino-cli`
+ to make the different concepts available for teaching and learning purposes. The implementation was done on Ubuntu 22.04 LTS in combination with an [STM32 L475E-OTO01A1](https://www.st.com/en/evaluation-tools/b-l475e-iot01a.html) board.
 
-The commandline tools of the first two programming languages require `python3` and `pip3` as well as `pipenv` to be installed on your system. The installation process of the specific packages is initiated by starting an `pipenv` environment within the corresponding folder.  For instance, to start the `pipenv` environment for MicroPython, run the following commands:
+The implementation can be realised in 3 formats:
++ native on your computer based on CLI tools
++ in a Docker container
++ in a [Edrys](https://edrys.org/) laboratory environment as remote lab.
 
-```bash
-> cd micropython
-> pipenv shell
-Creating a virtualenv for this project...
-Pipfile: /home/sebastian/Desktop/Python/stm_multilanguage/micropython/Pipfile
-Using /usr/bin/python3 (3.10.12) to create virtualenv...
-⠹ Creating virtual environment...created virtual environment CPython3.10.12.final.0-64 in 102ms
-  creator CPython3Posix(dest=/home/sebastian/.local/share/virtualenvs/micropython-hm3a3fmn, clear=False, no_vcs_ignore=False, global=False)
-  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/sebastian/.local/share/virtualenv)
-    added seed packages: pip==23.3.2, setuptools==69.0.3, wheel==0.42.0
-  activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
-
-✔ Successfully created virtual environment! 
-```
-
-Happy coding!
+The whole documentation of the installation is available as LiaScript course on [STM32 programming by CLI](https://liascript.github.io/course/?https://raw.githubusercontent.com/SebastianZug/STM_programming_by_CLI/main/documentation.md).

@@ -4,7 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-mbed-tools = "*"
+#mbed-tools = "*"
+mbed-cli = "*"
 
 [dev-packages]
 
