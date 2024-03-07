@@ -339,4 +339,9 @@ Downloading mbed-os and adding it to the project.
 
 ## Edrys remote lab
 
-Todo 
+For implementing courses based on our docker setups we developed [edrys-lite]() a Framework for serverless implementation of remote laboratories.
+
+### Installation
+
+
+### 

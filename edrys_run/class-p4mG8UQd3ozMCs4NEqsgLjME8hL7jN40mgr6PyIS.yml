@@ -1,0 +1,104 @@
+id: p4mG8UQd3ozMCs4NEqsgLjME8hL7jN40mgr6PyIS
+createdBy: N3B2mPEhcdyX
+dateCreated: 1689064662293
+name: STM Programmierparktikum mbed
+meta:
+  logo: >-
+    https://global.discourse-cdn.com/business7/uploads/ros/original/2X/2/26a69f2033d48e6099e82d162917b2463ed65fce.jpeg
+  description: Einführung in mbed Threads
+  selfAssign: true
+members:
+  teacher: []
+  student: []
+modules:
+  - url: https://cross-lab-project.github.io/edrys_module-markdown-it/index.html
+    config: >-
+      Der Kurs illustriert die grundlegende Nutzung eines Betriebssystems und
+      dessen Feature bei der Implementierung einer eingebetteten Anwendung. Als
+      Mikrocontroller dient ein [STM32
+      L475E-OTO01A1](https://www.st.com/en/evaluation-tools/b-l475e-iot01a.html)
+      Board. Für die Aufgabe wird mbedOS 6.0 verwendet. 
+
+
+      Folgen Sie zunächst den Erläuterungen unter [Video
+      mbedOS](https://www.youtube.com/watch?v=BsV-5IFaOLg) und beschäftigen Sie
+      sich mit dem Thread Konzept in mbedOS.
+    studentConfig: ''
+    teacherConfig: ''
+    stationConfig: ''
+    showInCustom: lobby
+    width: full
+    height: tall
+  - url: >-
+      https://raw.githubusercontent.com/edrys-labs/module-markdown-it/2.0.0/index.html
+    config: >-
+      # Aufgabe
+
+      Stellen Sie die Aufgabe so um, dass zwei Threads konkurierend auf die LED
+      zurückgreifen. 
+    studentConfig: ''
+    teacherConfig: ''
+    stationConfig: ''
+    showInCustom: station
+    width: half
+    height: tall
+  - url: https://edrys-labs.github.io/module-editor/index.html
+    config:
+      runCommand: execute
+      language: python
+      theme: light
+      editorText: |-
+        /* mbed Microcontroller Library
+        * Copyright (c) 2019 ARM Limited
+        * SPDX-License-Identifier: Apache-2.0
+        */
+        #include "mbed.h"
+        // Blinking rate in milliseconds
+        #define BLINKING_RATE     500ms
+        int main()
+        {
+            DigitalOut led(LED1);
+            printf("Programming ARM Controler with mbed is cool\r\n");
+            while (true) {
+                led = !led;
+                if (led)
+                    printf("LED ON\r\n");
+                else
+                    printf("LED OFF\r\n");
+                ThisThread::sleep_for(BLINKING_RATE);
+            }
+        }
+    showInCustom: station
+    width: full
+    height: medium
+  - url: https://edrys-labs.github.io/module-station-stream/index.html
+    stationConfig:
+      video: true
+      audio: false
+    showInCustom: station
+    width: half
+    height: medium
+  - url: https://edrys-labs.github.io/module-pyxtermjs/index.html
+    config: ''
+    studentConfig: ''
+    teacherConfig: ''
+    stationConfig:
+      server: http://localhost:5000/pty
+      execute: execute
+      script: |
+        echo $CODE | base64 --decode > main.cpp
+        PROJECT="mbedOS_project"
+        if [ ! -d "$PROJECT" ]; then
+           mbed-tools new $PROJECT
+        fi
+        mv main.cpp  $PROJECT/main.cpp
+        cd $PROJECT
+        mbed-tools compile -m DISCO_L475VG_IOT01A -t GCC_ARM -f
+        cd ..  
+        mbed-tools sterm
+      enable:
+        teacher: false
+        student: false
+    showInCustom: station
+    width: full
+    height: tall
