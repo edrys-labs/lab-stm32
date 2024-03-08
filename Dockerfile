@@ -17,6 +17,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     ninja-build \
     make \
     git \
+    mercurial \
     pip
 
 # This is required for installation, flashing, serial communication and debugging of the STM32
