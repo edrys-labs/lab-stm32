@@ -33,8 +33,7 @@ modules:
     showInCustom: lobby
     width: full
     height: tall
-  - url: >-
-      https://raw.githubusercontent.com/edrys-labs/module-markdown-it/2.0.0/index.html
+  - url: https://edrys-labs.github.io/module-markdown-it/index.html
     config: 
       content: >-
         ## Aufgabe
