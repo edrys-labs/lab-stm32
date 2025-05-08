@@ -12,221 +12,229 @@ members:
   student: []
 modules:
   - url: https://cross-lab-project.github.io/edrys_module-markdown-it/index.html
-    config: |-
-      # Aufgabenstellung 0
-        
-       Mit dieser Aufgabe sollen Sie sich mit dem Mikrocontroller grundsätzlich vertraut machen. Um das Verständnis für dessen Aufbau zu schärfen und prozedurale und objektorientierte Programmierkonzepte zu wiederholen werden Sie ein `Hello World` Beispiel, das wechselseitige Blinken von zwei LEDs auf verschiedenen Hardwareabstraktionsebenen ausführen:
-        + in C mit Hilfe der <a href="https://www.st.com/resource/en/user_manual/um1725-description-of-stm32f4-hal-and-lowlayer-drivers-stmicroelectronics.pdf" target="_blank"> STM Hardware Abstraction Layer</a>
-       des Herstellers STM
-        + in C++ mit dem Herstellerunabhängigen <a href="https://os.mbed.com/docs/mbed-os/v6.16/apis/index.html" target="_blank"> mbedOS Framework</a>
-      . Für die Aufgabe wird mbedOS 6.16 verwendet. 
-        
-       Als Mikrocontroller dient ein <a href="https://www.st.com/en/evaluation-tools/b-l475e-iot01a.html" target="_blank"> STM32 L475E-OTO01A1 </a>.
-       Board. Das Handbuch des konkreten Boards finden Sie unter  <a href="https://www.st.com/resource/en/user_manual/um2052-getting-started-with-stm32-mcu-discovery-kits-software-development-tools-stmicroelectronics.pdf" target="_blank"> User Manuals </a>.
-    studentConfig: ''
-    teacherConfig: ''
-    stationConfig: ''
+    config: 
+      content: |-
+        # Aufgabenstellung 0
+          
+        Mit dieser Aufgabe sollen Sie sich mit dem Mikrocontroller grundsätzlich vertraut machen. Um das Verständnis für dessen Aufbau zu schärfen und prozedurale und objektorientierte Programmierkonzepte zu wiederholen werden Sie ein `Hello World` Beispiel, das wechselseitige Blinken von zwei LEDs auf verschiedenen Hardwareabstraktionsebenen ausführen:
+          + in C mit Hilfe der <a href="https://www.st.com/resource/en/user_manual/um1725-description-of-stm32f4-hal-and-lowlayer-drivers-stmicroelectronics.pdf" target="_blank"> STM Hardware Abstraction Layer</a>
+        des Herstellers STM
+          + in C++ mit dem Herstellerunabhängigen <a href="https://os.mbed.com/docs/mbed-os/v6.16/apis/index.html" target="_blank"> mbedOS Framework</a>
+        . Für die Aufgabe wird mbedOS 6.16 verwendet. 
+          
+        Als Mikrocontroller dient ein <a href="https://www.st.com/en/evaluation-tools/b-l475e-iot01a.html" target="_blank"> STM32 L475E-OTO01A1 </a>.
+        Board. Das Handbuch des konkreten Boards finden Sie unter  <a href="https://www.st.com/resource/en/user_manual/um2052-getting-started-with-stm32-mcu-discovery-kits-software-development-tools-stmicroelectronics.pdf" target="_blank"> User Manuals </a>.
+    studentConfig: 
+      content: ''
+    teacherConfig: 
+      content: ''
+    stationConfig: 
+      content: ''
     showInCustom: lobby
     width: full
     height: tall
   - url: >-
       https://raw.githubusercontent.com/edrys-labs/module-markdown-it/2.0.0/index.html
-    config: >-
-      ## Aufgabe
+    config: 
+      content: >-
+        ## Aufgabe
 
-      Das Beispiel illustriert die Verwendung der <a
-      href="https://os.mbed.com/docs/mbed-os/v6.16/apis/digitalout.html"
-      target="_blank"> DigitalOut </a> Klasse, um einen einzelnen Pin
-      anzusteuern.
-
-
-      1. Experimentieren Sie mit der Möglichkeit zu evaluieren, ob die
-      elektrische Verbindung (`.is_connected()`) gegeben ist. Ermitteln Sie
-      dazu, welche Arten von Fehlern diese Methode identifizieren kann.
-
-      2. Erweitern Sie die Implementierung auf die LED2 und lassen Sie die
-      beiden LEDs wechselnd blinken. Realsieren Sie die Umsetzung mit den
-      generischeren Klassen `DigitalInOut` und `PortInOut`. Worin liegen die
-      Unterschiede in Bezug auf die Klasse `DigitalOut`? Erarbeiten Sie sich
-      insbesondere einen Überblick über die Modi, die für In- und Outputs
-      konfiguriert werden können. 
-
-      3. mbed basiert für die STM Controller auf dier HAL C Umsetzung. Ersetzen
-      Sie das Objektorientierte HelloWorld Beispiel durch eine C Umsetzung.
-      Nutzen Sie dafür das <a
-      href="https://www.disca.upv.es/aperles/arm_cortex_m3/curset/stm32f4xx_dsp_stdperiph_lib_v1.0.1/html/struct_g_p_i_o___init_type_def.html"
-      target="_blank"> GPIO_InitTypeDef </a>. Berücksichtigen Sie, dass auch die
-      zugehörige Clock des Ports aktiviert werden muss!
+        Das Beispiel illustriert die Verwendung der <a
+        href="https://os.mbed.com/docs/mbed-os/v6.16/apis/digitalout.html"
+        target="_blank"> DigitalOut </a> Klasse, um einen einzelnen Pin
+        anzusteuern.
 
 
-      ## Hinweise
+        1. Experimentieren Sie mit der Möglichkeit zu evaluieren, ob die
+        elektrische Verbindung (`.is_connected()`) gegeben ist. Ermitteln Sie
+        dazu, welche Arten von Fehlern diese Methode identifizieren kann.
 
-      1. LED1 ist mit dem Pin A5 und LED2 mit dem Pin B14 verbunden.
+        2. Erweitern Sie die Implementierung auf die LED2 und lassen Sie die
+        beiden LEDs wechselnd blinken. Realsieren Sie die Umsetzung mit den
+        generischeren Klassen `DigitalInOut` und `PortInOut`. Worin liegen die
+        Unterschiede in Bezug auf die Klasse `DigitalOut`? Erarbeiten Sie sich
+        insbesondere einen Überblick über die Modi, die für In- und Outputs
+        konfiguriert werden können. 
 
-      2. Vermeiden Sie beim Setzen und Löschen einzelner Bits ein überschreiben
-      des gesamten Registers! Nutzen Sie vielmehr die C Bitoperationen.
-
-
-      ```c
-         PORTB |= (1 << Bit);   // Setzen
-         PORTB &=~(1 << Bit); // Löschen
-      ```
-        
-      ## Initaler Code 
-
-
-      ```cpp
-
-      #include "mbed.h"
+        3. mbed basiert für die STM Controller auf dier HAL C Umsetzung. Ersetzen
+        Sie das Objektorientierte HelloWorld Beispiel durch eine C Umsetzung.
+        Nutzen Sie dafür das <a
+        href="https://www.disca.upv.es/aperles/arm_cortex_m3/curset/stm32f4xx_dsp_stdperiph_lib_v1.0.1/html/struct_g_p_i_o___init_type_def.html"
+        target="_blank"> GPIO_InitTypeDef </a>. Berücksichtigen Sie, dass auch die
+        zugehörige Clock des Ports aktiviert werden muss!
 
 
-      #define BLINKING_RATE  500 //ms
+        ## Hinweise
+
+        1. LED1 ist mit dem Pin A5 und LED2 mit dem Pin B14 verbunden.
+
+        2. Vermeiden Sie beim Setzen und Löschen einzelner Bits ein überschreiben
+        des gesamten Registers! Nutzen Sie vielmehr die C Bitoperationen.
 
 
-      int main()
-
-      {
-        DigitalOut led(LED1);
-        printf("Programming ARM Controler with mbed is cool\r\n");
-        while (true) {
-           led = !led;
-           thread_sleep_for(BLINKING_RATE);
-         }
-      }
-
-      ```
-
-       
-    studentConfig: ''
-    teacherConfig: >-
-      ## Aufgabe
-
-      Das Beispiel illustriert die Verwendung der <a
-      href="https://os.mbed.com/docs/mbed-os/v6.16/apis/digitalout.html"
-      target="_blank"> DigitalOut </a> Klasse, um einen einzelnen Pin
-      anzusteuern.
+        ```c
+          PORTB |= (1 << Bit);   // Setzen
+          PORTB &=~(1 << Bit); // Löschen
+        ```
+          
+        ## Initaler Code 
 
 
-      1. Experimentieren Sie mit der Möglichkeit zu evaluieren, ob die
-      elektrische Verbindung (`.is_connected()`) gegeben ist. Ermitteln Sie
-      dazu, welche Arten von Fehlern diese Methode identifizieren kann.
+        ```cpp
 
-      2. Erweitern Sie die Implementierung auf die LED2 und lassen Sie die
-      beiden LEDs wechselnd blinken. Realsieren Sie die Umsetzung mit den
-      generischeren Klassen `DigitalInOut` und `PortInOut`. Worin liegen die
-      Unterschiede in Bezug auf die Klasse `DigitalOut`? Erarbeiten Sie sich
-      insbesondere einen Überblick über die Modi, die für In- und Outputs
-      konfiguriert werden können. 
-
-      3. mbed basiert für die STM Controller auf dier HAL C Umsetzung. Ersetzen
-      Sie das Objektorientierte HelloWorld Beispiel durch eine C Umsetzung.
-      Nutzen Sie dafür das <a
-      href="https://www.disca.upv.es/aperles/arm_cortex_m3/curset/stm32f4xx_dsp_stdperiph_lib_v1.0.1/html/struct_g_p_i_o___init_type_def.html"
-      target="_blank"> GPIO_InitTypeDef </a>. Berücksichtigen Sie, dass auch die
-      zugehörige Clock des Ports aktiviert werden muss!
+        #include "mbed.h"
 
 
-      ## Hinweise
-
-      1. LED1 ist mit dem Pin A5 und LED2 mit dem Pin B14 verbunden.
-
-      2. Vermeiden Sie beim Setzen und Löschen einzelner Bits ein überschreiben
-      des gesamten Registers! Nutzen Sie vielmehr die C Bitoperationen.
+        #define BLINKING_RATE  500 //ms
 
 
-      ```c
-         PORTB |= (1 << Bit);   // Setzen
-         PORTB &=~(1 << Bit); // Löschen
-      ```
-        
-      ## Initaler Code 
+        int main()
 
-
-      ```cpp
-
-      #include "mbed.h"
-
-
-      #define BLINKING_RATE  500 //ms
-
-
-      int main()
-
-      {
-        DigitalOut led(LED1);
-        printf("Programming ARM Controler with mbed is cool\r\n");
-        while (true) {
-           led = !led;
-           thread_sleep_for(BLINKING_RATE);
-         }
-      }
-
-      ```
-
-
-      ## Lösung
-
-
-      ```cpp
-
-      #include "mbed.h"
-
-
-      #define BLINK_DELAY 1000
-
-
-      #define LEDgn_Pin_1 GPIO_PIN_5
-
-      #define LEDgn_GPIO_Port_1 GPIOA
-
-      #define LEDgn_Pin_2 GPIO_PIN_14
-
-      #define LEDgn_GPIO_Port_2 GPIOB
-
-
-      #define GREEN_LED2_MASK 0b100000000000000
-
-
-      int main()
-
-      {
-          printf("Programming ARM GPIO outputs\r\n");
-
-          // HAL basierte Implementierung    
-          __HAL_RCC_GPIOA_CLK_ENABLE();
-          GPIO_InitTypeDef GPIO_InitStruct_1;
-          GPIO_InitStruct_1.Pin = LEDgn_Pin_1;
-          GPIO_InitStruct_1.Mode = GPIO_MODE_OUTPUT_PP;
-          GPIO_InitStruct_1.Pull = GPIO_NOPULL;
-          GPIO_InitStruct_1.Speed = GPIO_SPEED_FREQ_LOW;
-          HAL_GPIO_Init(LEDgn_GPIO_Port_1, &GPIO_InitStruct_1);
-
-          PortOut greenLED2(PortB, GREEN_LED2_MASK);
-          //__HAL_RCC_GPIOB_CLK_ENABLE();
-          //GPIO_InitTypeDef GPIO_InitStruct_2;
-          //GPIO_InitStruct_2.Pin = LEDgn_Pin_2;
-          //GPIO_InitStruct_2.Mode = GPIO_MODE_OUTPUT_PP;
-          //GPIO_InitStruct_2.Pull = GPIO_NOPULL;
-          //GPIO_InitStruct_2.Speed = GPIO_SPEED_FREQ_LOW;
-          //HAL_GPIO_Init(LEDgn_GPIO_Port_2, &GPIO_InitStruct_2);
-
-          while(true)
-          {
-              //HAL_GPIO_WritePin(LEDgn_GPIO_Port_2, LEDgn_Pin_2, GPIO_PIN_SET);
-              greenLED2 = greenLED2 | GPIO_PIN_14;
-              thread_sleep_for(BLINK_DELAY);
-              //HAL_GPIO_WritePin(LEDgn_GPIO_Port_2, LEDgn_Pin_2, GPIO_PIN_RESET);
-              greenLED2 = greenLED2 &~ GPIO_PIN_14;
-              HAL_GPIO_WritePin(LEDgn_GPIO_Port_1, LEDgn_Pin_1, GPIO_PIN_SET);
-              thread_sleep_for(BLINK_DELAY);
-              HAL_GPIO_WritePin(LEDgn_GPIO_Port_1, LEDgn_Pin_1, GPIO_PIN_RESET);
+        {
+          DigitalOut led(LED1);
+          printf("Programming ARM Controler with mbed is cool\r\n");
+          while (true) {
+            led = !led;
+            thread_sleep_for(BLINKING_RATE);
           }
-      }
+        }
 
-      ```
+        ```
 
-         
-    stationConfig: ''
+        
+    studentConfig: 
+      content: ''
+    teacherConfig: 
+      content: >-
+        ## Aufgabe
+
+        Das Beispiel illustriert die Verwendung der <a
+        href="https://os.mbed.com/docs/mbed-os/v6.16/apis/digitalout.html"
+        target="_blank"> DigitalOut </a> Klasse, um einen einzelnen Pin
+        anzusteuern.
+
+
+        1. Experimentieren Sie mit der Möglichkeit zu evaluieren, ob die
+        elektrische Verbindung (`.is_connected()`) gegeben ist. Ermitteln Sie
+        dazu, welche Arten von Fehlern diese Methode identifizieren kann.
+
+        2. Erweitern Sie die Implementierung auf die LED2 und lassen Sie die
+        beiden LEDs wechselnd blinken. Realsieren Sie die Umsetzung mit den
+        generischeren Klassen `DigitalInOut` und `PortInOut`. Worin liegen die
+        Unterschiede in Bezug auf die Klasse `DigitalOut`? Erarbeiten Sie sich
+        insbesondere einen Überblick über die Modi, die für In- und Outputs
+        konfiguriert werden können. 
+
+        3. mbed basiert für die STM Controller auf dier HAL C Umsetzung. Ersetzen
+        Sie das Objektorientierte HelloWorld Beispiel durch eine C Umsetzung.
+        Nutzen Sie dafür das <a
+        href="https://www.disca.upv.es/aperles/arm_cortex_m3/curset/stm32f4xx_dsp_stdperiph_lib_v1.0.1/html/struct_g_p_i_o___init_type_def.html"
+        target="_blank"> GPIO_InitTypeDef </a>. Berücksichtigen Sie, dass auch die
+        zugehörige Clock des Ports aktiviert werden muss!
+
+
+        ## Hinweise
+
+        1. LED1 ist mit dem Pin A5 und LED2 mit dem Pin B14 verbunden.
+
+        2. Vermeiden Sie beim Setzen und Löschen einzelner Bits ein überschreiben
+        des gesamten Registers! Nutzen Sie vielmehr die C Bitoperationen.
+
+
+        ```c
+          PORTB |= (1 << Bit);   // Setzen
+          PORTB &=~(1 << Bit); // Löschen
+        ```
+          
+        ## Initaler Code 
+
+
+        ```cpp
+
+        #include "mbed.h"
+
+
+        #define BLINKING_RATE  500 //ms
+
+
+        int main()
+
+        {
+          DigitalOut led(LED1);
+          printf("Programming ARM Controler with mbed is cool\r\n");
+          while (true) {
+            led = !led;
+            thread_sleep_for(BLINKING_RATE);
+          }
+        }
+
+        ```
+
+
+        ## Lösung
+
+
+        ```cpp
+
+        #include "mbed.h"
+
+
+        #define BLINK_DELAY 1000
+
+
+        #define LEDgn_Pin_1 GPIO_PIN_5
+
+        #define LEDgn_GPIO_Port_1 GPIOA
+
+        #define LEDgn_Pin_2 GPIO_PIN_14
+
+        #define LEDgn_GPIO_Port_2 GPIOB
+
+
+        #define GREEN_LED2_MASK 0b100000000000000
+
+
+        int main()
+
+        {
+            printf("Programming ARM GPIO outputs\r\n");
+
+            // HAL basierte Implementierung    
+            __HAL_RCC_GPIOA_CLK_ENABLE();
+            GPIO_InitTypeDef GPIO_InitStruct_1;
+            GPIO_InitStruct_1.Pin = LEDgn_Pin_1;
+            GPIO_InitStruct_1.Mode = GPIO_MODE_OUTPUT_PP;
+            GPIO_InitStruct_1.Pull = GPIO_NOPULL;
+            GPIO_InitStruct_1.Speed = GPIO_SPEED_FREQ_LOW;
+            HAL_GPIO_Init(LEDgn_GPIO_Port_1, &GPIO_InitStruct_1);
+
+            PortOut greenLED2(PortB, GREEN_LED2_MASK);
+            //__HAL_RCC_GPIOB_CLK_ENABLE();
+            //GPIO_InitTypeDef GPIO_InitStruct_2;
+            //GPIO_InitStruct_2.Pin = LEDgn_Pin_2;
+            //GPIO_InitStruct_2.Mode = GPIO_MODE_OUTPUT_PP;
+            //GPIO_InitStruct_2.Pull = GPIO_NOPULL;
+            //GPIO_InitStruct_2.Speed = GPIO_SPEED_FREQ_LOW;
+            //HAL_GPIO_Init(LEDgn_GPIO_Port_2, &GPIO_InitStruct_2);
+
+            while(true)
+            {
+                //HAL_GPIO_WritePin(LEDgn_GPIO_Port_2, LEDgn_Pin_2, GPIO_PIN_SET);
+                greenLED2 = greenLED2 | GPIO_PIN_14;
+                thread_sleep_for(BLINK_DELAY);
+                //HAL_GPIO_WritePin(LEDgn_GPIO_Port_2, LEDgn_Pin_2, GPIO_PIN_RESET);
+                greenLED2 = greenLED2 &~ GPIO_PIN_14;
+                HAL_GPIO_WritePin(LEDgn_GPIO_Port_1, LEDgn_Pin_1, GPIO_PIN_SET);
+                thread_sleep_for(BLINK_DELAY);
+                HAL_GPIO_WritePin(LEDgn_GPIO_Port_1, LEDgn_Pin_1, GPIO_PIN_RESET);
+            }
+        }
+
+        ```
+
+          
+    stationConfig: 
+      content: ''
     showInCustom: station
     width: half
     height: tall
